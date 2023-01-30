@@ -22,6 +22,7 @@
       >
         <el-table-column label="序号" type="index" width="80" align="center" />
         <el-table-column :show-overflow-tooltip="true" prop="name" label="角色名称" />
+        <el-table-column :show-overflow-tooltip="true" prop="creationTime" label="创建时间" />
         <el-table-column :show-overflow-tooltip="true" prop="description" label="备注" />
         <el-table-column :show-overflow-tooltip="true" label="操作" width="150">
           <template slot-scope="scope">
