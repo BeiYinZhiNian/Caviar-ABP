@@ -44,7 +44,7 @@ namespace Caviar
 
             // Use database for language management
             Configuration.Modules.Zero().LanguageManagement.EnableDbLocalization();
-
+            Configuration.Modules.AbpAspNetCore().UseMvcDateTimeFormatForAppServices = true;
             Configuration.Modules.AbpAspNetCore()
                  .CreateControllersForAppServices(
                      typeof(CaviarApplicationModule).GetAssembly()
