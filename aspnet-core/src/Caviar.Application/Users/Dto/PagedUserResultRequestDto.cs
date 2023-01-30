@@ -8,7 +8,8 @@ namespace Caviar.Users.Dto
     //custom PagedResultRequestDto
     public class PagedUserResultRequestDto : PagedResultRequestDto
     {
-        public string Keyword { get; set; }
-        public bool? IsActive { get; set; }
+        public string Name { get; set; }
+        public string PhoneNumber { get; set; }
+        public int[] RoleIds { get; set; }
     }
 }

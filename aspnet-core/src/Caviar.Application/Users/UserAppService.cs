@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
+using Abp.Authorization.Users;
 using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
@@ -35,6 +36,7 @@ namespace Caviar.Users
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly IAbpSession _abpSession;
         private readonly LogInManager _logInManager;
+        private readonly IRepository<UserRole, long> _userRolerepository;
 
         public UserAppService(
             IRepository<User, long> repository,
@@ -42,6 +44,7 @@ namespace Caviar.Users
             RoleManager roleManager,
             IRepository<Role> roleRepository,
             IPasswordHasher<User> passwordHasher,
+            IRepository<UserRole, long> userRolerepository,
             IAbpSession abpSession,
             LogInManager logInManager)
             : base(repository)
@@ -52,6 +55,7 @@ namespace Caviar.Users
             _passwordHasher = passwordHasher;
             _abpSession = abpSession;
             _logInManager = logInManager;
+            _userRolerepository = userRolerepository;
         }
 
         public override async Task<UserDto> CreateAsync(CreateUserDto input)
@@ -161,9 +165,11 @@ namespace Caviar.Users
 
         protected override IQueryable<User> CreateFilteredQuery(PagedUserResultRequestDto input)
         {
+            var userIds = input.RoleIds == null ? null : _userRolerepository.GetAllList(u => input.RoleIds.Contains(u.RoleId)).Select(u => u.UserId).ToList();
             return Repository.GetAllIncluding(x => x.Roles)
-                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.UserName.Contains(input.Keyword) || x.Name.Contains(input.Keyword) || x.EmailAddress.Contains(input.Keyword))
-                .WhereIf(input.IsActive.HasValue, x => x.IsActive == input.IsActive);
+                .WhereIf(!input.Name.IsNullOrWhiteSpace(), x => x.Name.Contains(input.Name))
+                .WhereIf(!input.PhoneNumber.IsNullOrWhiteSpace(), x => x.PhoneNumber.Contains(input.PhoneNumber))
+                .WhereIf(input.RoleIds != null, x => userIds.Contains(x.Id));
         }
 
         protected override async Task<User> GetEntityByIdAsync(long id)

@@ -7,7 +7,7 @@ namespace Caviar.Roles.Dto
 {
     public class PagedRoleResultRequestDto : PagedResultRequestDto
     {
-        public string Keyword { get; set; }
+        public string Name { get; set; }
     }
 }
 

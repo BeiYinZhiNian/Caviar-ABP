@@ -112,9 +112,7 @@ namespace Caviar.Roles
         protected override IQueryable<Role> CreateFilteredQuery(PagedRoleResultRequestDto input)
         {
             return Repository.GetAllIncluding(x => x.Permissions)
-                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.Name.Contains(input.Keyword)
-                || x.DisplayName.Contains(input.Keyword)
-                || x.Description.Contains(input.Keyword));
+                .WhereIf(!input.Name.IsNullOrWhiteSpace(), x => x.Name.Contains(input.Name));
         }
 
         protected override async Task<Role> GetEntityByIdAsync(int id)
