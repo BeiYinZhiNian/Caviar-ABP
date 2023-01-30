@@ -16,10 +16,14 @@
               首页
             </el-dropdown-item>
           </router-link>
+          <el-dropdown-item @click.native="$refs.changePasswordDto.setFormData">
+            <span style="display:block;">修改密码</span>
+          </el-dropdown-item>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">退出登录</span>
           </el-dropdown-item>
         </el-dropdown-menu>
+        <changePasswordDto ref="changePasswordDto" />
       </el-dropdown>
     </div>
   </div>
@@ -27,13 +31,15 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import changePasswordDto from '@/views/systemManagement/user/changePasswordDto.vue'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
+    changePasswordDto
   },
   computed: {
     ...mapGetters([
