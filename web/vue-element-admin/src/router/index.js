@@ -100,7 +100,6 @@ export const asyncRoutes = [
   {
     path: '/systemManagement',
     component: Layout,
-    redirect: '/systemManagement/user',
     name: 'systemManagement',
     meta: { title: '系统设置', icon: 'el-icon-setting' },
     children: [
