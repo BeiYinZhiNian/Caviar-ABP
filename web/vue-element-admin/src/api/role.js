@@ -1,0 +1,54 @@
+import request from '@/utils/request'
+import qs from 'qs'
+const baseUri = '/services/app/role'
+
+export function createData(data) {
+  return request({
+    url: baseUri + '/create',
+    method: 'post',
+    data: data
+  })
+}
+
+export function updateData(data) {
+  return request({
+    url: baseUri + '/update',
+    method: 'put',
+    data: data
+  })
+}
+
+export function deleteData(data) {
+  return request({
+    url: baseUri + '/delete',
+    method: 'delete',
+    params: data
+  })
+}
+
+export function getAll(data) {
+  return request({
+    url: baseUri + '/getAll',
+    method: 'get',
+    params: data,
+    paramsSerializer: params => {
+      return qs.stringify(params, {
+        indices: false
+      })
+    }
+  })
+}
+
+export function getAllPermissions() {
+  return request({
+    url: baseUri + '/getAllPermissions',
+    method: 'get'
+  })
+}
+
+export function getRoles() {
+  return request({
+    url: baseUri + '/getRoles',
+    method: 'get'
+  })
+}
