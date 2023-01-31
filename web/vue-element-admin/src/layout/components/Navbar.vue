@@ -5,9 +5,12 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
+      <template>
+        <search id="header-search" class="right-menu-item" />
+      </template>
+      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <span>{{ name }}</span>
+          <img src="@/assets/images/f778738c-e4f8-4870-b634-56703b4acafe.gif" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -34,12 +37,14 @@ import { mapGetters } from 'vuex'
 import changePasswordDto from '@/views/systemManagement/user/changePasswordDto.vue'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import Search from '@/components/HeaderSearch'
 
 export default {
   components: {
     Breadcrumb,
     Hamburger,
-    changePasswordDto
+    changePasswordDto,
+    Search
   },
   computed: {
     ...mapGetters([
