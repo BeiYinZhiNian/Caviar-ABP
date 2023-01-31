@@ -7,7 +7,6 @@ import { asyncRoutes, constantRoutes } from '@/router'
  */
 export function hasPermission(roles, route) {
   if (route.meta && route.meta.roles) {
-    console.log(route.meta.roles, roles)
     return roles.some(role => route.meta.roles.includes(role))
   } else {
     return true
