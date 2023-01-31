@@ -54,28 +54,6 @@ export const constantRoutes = [
       meta: { title: '首页', icon: 'dashboard', affix: true }
     }]
   }
-
-  // {
-  //   path: '/systemManagement',
-  //   component: Layout,
-  //   redirect: '/systemManagement/user',
-  //   name: 'systemManagement',
-  //   meta: { title: '系统设置', icon: 'el-icon-s-help' },
-  //   children: [
-  //     {
-  //       path: 'user',
-  //       name: 'user',
-  //       component: () => import('@/views/systemManagement/user/index'),
-  //       meta: { title: '用户管理', icon: 'user' }
-  //     },
-  //     {
-  //       path: 'role',
-  //       name: 'role',
-  //       component: () => import('@/views/systemManagement/role/index'),
-  //       meta: { title: '角色管理', icon: 'el-icon-picture-outline-round' }
-  //     }
-  //   ]
-  // }
 ]
 
 const createRouter = () => new Router({
@@ -100,6 +78,8 @@ export const asyncRoutes = [
   {
     path: '/systemManagement',
     component: Layout,
+    alwaysShow: true,
+    redirect: 'noRedirect',
     name: 'systemManagement',
     meta: { title: '系统设置', icon: 'el-icon-setting' },
     children: [
