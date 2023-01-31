@@ -14,10 +14,6 @@ namespace Caviar.Authorization
         /// </summary>
         public const string Pages_Users = "Pages.Users";
         /// <summary>
-        /// 用户激活
-        /// </summary>
-        public const string Pages_Users_Activation = "Pages.Users.Activation";
-        /// <summary>
         /// 角色管理
         /// </summary>
         public const string Pages_Roles = "Pages.Roles";
