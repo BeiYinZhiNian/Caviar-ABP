@@ -7,6 +7,7 @@
     <div class="right-menu">
       <template>
         <search id="header-search" class="right-menu-item" />
+        <screenfull id="screenfull" class="right-menu-item hover-effect" />
       </template>
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
@@ -38,13 +39,15 @@ import changePasswordDto from '@/views/systemManagement/user/changePasswordDto.v
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import Search from '@/components/HeaderSearch'
+import Screenfull from '@/components/Screenfull'
 
 export default {
   components: {
     Breadcrumb,
     Hamburger,
     changePasswordDto,
-    Search
+    Search,
+    Screenfull
   },
   computed: {
     ...mapGetters([
