@@ -1,6 +1,7 @@
 ﻿// Copyright (c) BeiYinZhiNian (1031622947@qq.com). All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.IdentityFramework;
 using Abp.Linq.Extensions;
+using Abp.UI;
 using Caviar.Authorization;
 using Caviar.Authorization.Roles;
 using Caviar.Authorization.Users;
@@ -70,7 +72,10 @@ namespace Caviar.Roles
             CheckUpdatePermission();
 
             var role = await _roleManager.GetRoleByIdAsync(input.Id);
-
+            if (role.Name == CaviarConsts.AdminName)
+            {
+                throw new UserFriendlyException("超级管理员角色禁止修改");
+            }
             ObjectMapper.Map(input, role);
 
             CheckErrors(await _roleManager.UpdateAsync(role));
@@ -90,6 +95,10 @@ namespace Caviar.Roles
             CheckDeletePermission();
 
             var role = await _roleManager.FindByIdAsync(input.Id.ToString());
+            if (role.Name == CaviarConsts.AdminName)
+            {
+                throw new UserFriendlyException("超级管理员角色禁止删除");
+            }
             var users = await _userManager.GetUsersInRoleAsync(role.NormalizedName);
 
             foreach (var user in users)
@@ -122,7 +131,7 @@ namespace Caviar.Roles
 
         protected override IQueryable<Role> ApplySorting(IQueryable<Role> query, PagedRoleResultRequestDto input)
         {
-            return query.OrderBy(r => r.DisplayName);
+            return query.OrderBy(r => r.CreationTime);
         }
 
         protected virtual void CheckErrors(IdentityResult identityResult)

@@ -21,5 +21,9 @@ namespace Caviar.Authorization
         /// 角色管理
         /// </summary>
         public const string Pages_Roles = "Pages.Roles";
+        /// <summary>
+        /// 基础信息修改
+        /// </summary>
+        public const string Pages_BasicInfo = "Pages.BasicInfo";
     }
 }

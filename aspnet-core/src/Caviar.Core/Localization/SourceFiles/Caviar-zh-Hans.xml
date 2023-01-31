@@ -98,6 +98,7 @@
     <text name="EditTenant">编辑租户</text>
     <text name="SearchWithThreeDot">搜索...</text>
 	<text name="UsersActivation">用户激活</text>
+    <text name="BasicInfo">基础信息修改</text>
     
   </texts>
 </localizationDictionary>

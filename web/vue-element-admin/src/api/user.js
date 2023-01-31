@@ -62,10 +62,3 @@ export function getInfo(token) {
   })
 }
 
-export function changePassword(data) {
-  return request({
-    url: baseUri + '/changePassword',
-    method: 'post',
-    data
-  })
-}

@@ -86,7 +86,10 @@ namespace Caviar.Users
             CheckUpdatePermission();
 
             var user = await _userManager.GetUserByIdAsync(input.Id);
-
+            if (user.PhoneNumber == CaviarConsts.AdminPhoneNumber)
+            {
+                throw new UserFriendlyException("超级管理员账号禁止修改");
+            }
             MapToEntity(input, user);
 
             CheckErrors(await _userManager.UpdateAsync(user));
@@ -102,6 +105,10 @@ namespace Caviar.Users
         public override async Task DeleteAsync(EntityDto<long> input)
         {
             var user = await _userManager.GetUserByIdAsync(input.Id);
+            if (user.PhoneNumber == CaviarConsts.AdminPhoneNumber)
+            {
+                throw new UserFriendlyException("超级管理员账号禁止删除");
+            }
             await _userManager.DeleteAsync(user);
         }
 
@@ -127,15 +134,6 @@ namespace Caviar.Users
         {
             var roles = await _roleRepository.GetAllListAsync();
             return new ListResultDto<RoleDto>(ObjectMapper.Map<List<RoleDto>>(roles));
-        }
-
-        public async Task ChangeLanguage(ChangeUserLanguageDto input)
-        {
-            await SettingManager.ChangeSettingForUserAsync(
-                AbpSession.ToUserIdentifier(),
-                LocalizationSettingNames.DefaultLanguage,
-                input.LanguageName
-            );
         }
 
         protected override User MapToEntity(CreateUserDto createInput)
@@ -186,37 +184,12 @@ namespace Caviar.Users
 
         protected override IQueryable<User> ApplySorting(IQueryable<User> query, PagedUserResultRequestDto input)
         {
-            return query.OrderBy(r => r.UserName);
+            return query.OrderByDescending(r => r.CreationTime);
         }
 
         protected virtual void CheckErrors(IdentityResult identityResult)
         {
             identityResult.CheckErrors(LocalizationManager);
-        }
-
-        public async Task<bool> ChangePassword(ChangePasswordDto input)
-        {
-            await _userManager.InitializeOptionsAsync(AbpSession.TenantId);
-
-            var user = await _userManager.FindByIdAsync(AbpSession.GetUserId().ToString());
-            if (user == null)
-            {
-                throw new Exception("There is no current user!");
-            }
-
-            if (await _userManager.CheckPasswordAsync(user, input.CurrentPassword))
-            {
-                CheckErrors(await _userManager.ChangePasswordAsync(user, input.NewPassword));
-            }
-            else
-            {
-                CheckErrors(IdentityResult.Failed(new IdentityError
-                {
-                    Description = "Incorrect password."
-                }));
-            }
-
-            return true;
         }
 
         public async Task<bool> ResetPassword(ResetPasswordDto input)

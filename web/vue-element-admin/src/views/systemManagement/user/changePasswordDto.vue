@@ -23,7 +23,7 @@
   </el-dialog>
 </template>
 <script>
-import { changePassword } from '@/api/user'
+import { changePassword } from '@/api/userBasicInfo'
 export default {
   data() {
     var validatePass2 = (rule, value, callback) => {
