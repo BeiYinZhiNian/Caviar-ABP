@@ -12,8 +12,8 @@
       <el-form-item label="新密码" prop="newPassword">
         <el-input v-model="formData.newPassword" placeholder="请输入新密码" show-password />
       </el-form-item>
-      <el-form-item label="密码确认" prop="checkPass">
-        <el-input v-model="formData.checkPass" placeholder="请再次输入新密码" show-password />
+      <el-form-item label="确认新密码" prop="checkPass">
+        <el-input v-model="formData.checkPass" placeholder="请确认新密码" show-password />
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
