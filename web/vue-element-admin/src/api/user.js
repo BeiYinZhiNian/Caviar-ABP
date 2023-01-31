@@ -62,3 +62,10 @@ export function getInfo(token) {
   })
 }
 
+export function resetPassword(data) {
+  return request({
+    url: baseUri + '/resetPassword',
+    method: 'post',
+    data
+  })
+}

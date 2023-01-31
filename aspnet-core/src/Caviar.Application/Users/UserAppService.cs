@@ -185,7 +185,7 @@ namespace Caviar.Users
             var loginAsync = await _logInManager.LoginAsync(currentUser.UserName, input.AdminPassword, shouldLockout: false);
             if (loginAsync.Result != AbpLoginResultType.Success)
             {
-                throw new UserFriendlyException("Your 'Admin Password' did not match the one on record.  Please try again.");
+                throw new UserFriendlyException("您输入的管理员密码不正确，请重试");
             }
 
             if (currentUser.IsDeleted || !currentUser.IsActive)

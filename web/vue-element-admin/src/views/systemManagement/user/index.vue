@@ -52,18 +52,22 @@
             <span>{{ scope.row.roleNames.join('、') }}</span>
           </template>
         </el-table-column>
-        <el-table-column :show-overflow-tooltip="true" label="操作" width="150">
+        <el-table-column :show-overflow-tooltip="true" label="操作" width="200">
           <template slot-scope="scope">
             <el-button
               size="mini"
               type="primary"
               @click="$refs.formData.setFormData(scope.row)"
             >编辑</el-button>
-            <el-button
-              size="mini"
-              type="danger"
-              @click="handleDelete(scope.row)"
-            >删除</el-button>
+            <el-dropdown style="margin-left: 10px;">
+              <el-button type="success" size="mini">
+                更多<i class="el-icon-arrow-down el-icon--right" />
+              </el-button>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item @click.native="$refs.resetPasswordDto.setFormData(scope.row)">重置密码</el-dropdown-item>
+                <el-dropdown-item @click.native="handleDelete(scope.row)">删除</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
           </template>
         </el-table-column>
       </el-table>
@@ -80,14 +84,16 @@
       />
     </div>
     <formData ref="formData" :success="loadData" />
+    <resetPasswordDto ref="resetPasswordDto" />
   </div>
 </template>
 <script>
 import formData from '@/views/systemManagement/user/formData.vue'
+import resetPasswordDto from '@/views/systemManagement/user/resetPasswordDto.vue'
 import { getAll, deleteData } from '@/api/user'
 import { getRoles } from '@/api/role'
 export default {
-  components: { formData },
+  components: { formData, resetPasswordDto },
   data() {
     return {
       loading: false,

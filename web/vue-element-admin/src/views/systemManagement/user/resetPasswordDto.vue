@@ -1,13 +1,16 @@
 <template>
   <el-dialog
-    title="修改密码"
+    title="重置密码"
     append-to-body
     :visible.sync="dialogVisible"
     width="30%"
   >
     <el-form ref="form" :model="formData" :rules="rules" label-width="100px">
-      <el-form-item label="当前密码" prop="currentPassword">
-        <el-input v-model="formData.currentPassword" placeholder="请输入当前密码" show-password />
+      <el-form-item label="手机号">
+        <span>{{ formData.phoneNumber }}</span>
+      </el-form-item>
+      <el-form-item label="管理员密码" prop="adminPassword">
+        <el-input v-model="formData.adminPassword" placeholder="请当前管理员密码" show-password />
       </el-form-item>
       <el-form-item label="新密码" prop="newPassword">
         <el-input v-model="formData.newPassword" placeholder="请输入新密码" show-password />
@@ -23,7 +26,7 @@
   </el-dialog>
 </template>
 <script>
-import { changePassword } from '@/api/userBasicInfo'
+import { resetPassword } from '@/api/user'
 export default {
   data() {
     var validatePass2 = (rule, value, callback) => {
@@ -40,8 +43,8 @@ export default {
       loading: false,
       formData: {},
       rules: {
-        currentPassword: [
-          { required: true, message: '请输入当前密码', trigger: 'blur' },
+        adminPassword: [
+          { required: true, message: '请输入当前管理员密码', trigger: 'blur' },
           { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' }
         ],
         newPassword: [
@@ -55,15 +58,17 @@ export default {
     }
   },
   methods: {
-    setFormData() {
+    setFormData(data) {
       this.formData = {}
+      this.formData.userId = data.id
+      this.formData.phoneNumber = data.phoneNumber
       this.dialogVisible = true
     },
     submitForm() {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.loading = true
-          changePassword(this.formData).then(response => {
+          resetPassword(this.formData).then(response => {
             this.$message({
               message: '操作成功',
               type: 'success'
