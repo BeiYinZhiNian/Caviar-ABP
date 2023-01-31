@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+
+/*login*/
+.um-loginbox{ vertical-align: middle; height: 598px;border-radius: 80px 8px 80px 8px;}
+.um-loginbox .el-card__body{padding:0px;}
+.um-loginleft{width: 480px; background:url(../assets/images/login.png) no-repeat center bottom; height: 600px; float: left;}
+.um-loginleft span{display: block; margin: 50px 0 0 50px;}
+.um-loginright{float: right; background: url(../assets/images/loginbg.png) no-repeat; height: 600px; width: 603px;}
+.um-systemname{float: left; padding-left: 280px; margin-top: 153px;font-size: 20px;}
+.um-login{padding-left: 150px; margin-top: 40px; float: left; width: 500px;}
+.um-logincol{height:40px; line-height:40px;}
+.um-login .el-input__inner{height:44px; line-height:44px;}
+.um-loginbtn{margin-top: 30px;}
+.um-loginbtn .el-button{width: 100%; height: 45px; font-size: 18px;}
+.um-loginfoot{position: absolute; bottom:30px; text-align: center;font-size: 14px; color: #9be0f9; z-index: 99; width: 100%;}
