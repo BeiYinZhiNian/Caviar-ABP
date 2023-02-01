@@ -1,12 +1,14 @@
 import { login, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, getTenantId } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
+    tenantId: getTenantId(),
     name: '',
     userId: 0,
+    tenant: undefined,
     phoneNumber: '',
     roles: [],
     permissions: [],
@@ -24,6 +26,9 @@ const mutations = {
     state.token = token
   },
   SET_USER_INFO: (state, data) => {
+    if (data === null) {
+      return
+    }
     state.name = data.name
     state.userId = data.id
     state.phoneNumber = data.phoneNumber
@@ -34,6 +39,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_TENANT: (state, tenant) => {
+    state.tenant = tenant
   }
 }
 
@@ -59,16 +67,16 @@ const actions = {
       getInfo().then(response => {
         const { result } = response
 
-        const { user } = result
+        const { user, tenant } = result
 
         commit('SET_USER_INFO', user)
+        commit('SET_TENANT', tenant)
         resolve(user)
       }).catch(error => {
         reject(error)
       })
     })
   },
-
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {

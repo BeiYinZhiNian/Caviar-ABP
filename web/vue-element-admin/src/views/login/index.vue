@@ -13,6 +13,7 @@
             <div class="um-systemname">Caviar后台管理系统</div>
 
             <el-row class="um-login">
+              <tenantSwitch ref="tenantSwitch" />
               <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
                 <el-col class="um-logincol">手机号</el-col>
                 <el-form-item prop="username">
@@ -58,8 +59,10 @@
 
 <script>
 import '@/styles/uimaker.css'
+import tenantSwitch from '@/views/login/tenantSwitch.vue'
 export default {
   name: 'Login',
+  components: { tenantSwitch },
   data() {
     return {
       loginForm: {

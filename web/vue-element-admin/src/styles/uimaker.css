@@ -8,7 +8,7 @@
 .um-loginleft span{display: block; margin: 50px 0 0 50px;}
 .um-loginright{float: right; background: url(../assets/images/loginbg.png) no-repeat; height: 600px; width: 603px;}
 .um-systemname{float: left; padding-left: 280px; margin-top: 153px;font-size: 20px;}
-.um-login{padding-left: 150px; margin-top: 40px; float: left; width: 500px;}
+.um-login{padding-left: 150px; margin-top: 20px; float: left; width: 500px;}
 .um-logincol{height:40px; line-height:40px;}
 .um-login .el-input__inner{height:44px; line-height:44px;}
 .um-loginbtn{margin-top: 30px;}

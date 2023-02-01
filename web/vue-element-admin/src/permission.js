@@ -50,6 +50,8 @@ router.beforeEach(async(to, from, next) => {
     /* has no token*/
 
     if (whiteList.indexOf(to.path) !== -1) {
+      await store.dispatch('user/getInfo')
+      console.log('获取用户信息')
       // in the free login whitelist, go directly
       next()
     } else {

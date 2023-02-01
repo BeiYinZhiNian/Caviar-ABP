@@ -21,6 +21,9 @@ service.interceptors.request.use(
       // please modify it according to the actual situation
       config.headers['authorization'] = 'Bearer ' + getToken()
     }
+    if (store.getters.tenantId) {
+      config.headers['abp.tenantid'] = store.getters.tenantId
+    }
     return config
   },
   error => {

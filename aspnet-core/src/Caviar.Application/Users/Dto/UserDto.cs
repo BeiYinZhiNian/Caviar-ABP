@@ -1,4 +1,4 @@
-// Copyright (c) BeiYinZhiNian (1031622947@qq.com). All rights reserved.
+ï»¿// Copyright (c) BeiYinZhiNian (1031622947@qq.com). All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -20,14 +20,13 @@ namespace Caviar.Users.Dto
         public string Name { get; set; }
 
         [Required]
-        [RegularExpression(@"^1[3456789]\d{9}$", ErrorMessage = "ÇëÊäÈëÕıÈ·µÄÊÖ»úºÅ")]
+        [RegularExpression(@"^1[3456789]\d{9}$", ErrorMessage = "è¯·è¾“å…¥æ­£ç¡®çš„æ‰‹æœºå·")]
         [StringLength(AbpUserBase.MaxPhoneNumberLength)]
         public string PhoneNumber { get; set; }
 
         public bool IsActive { get; set; }
 
         public DateTime CreationTime { get; set; }
-
         public string[] RoleNames { get; set; }
     }
 }
