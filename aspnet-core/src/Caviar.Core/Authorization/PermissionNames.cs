@@ -8,18 +8,18 @@ namespace Caviar.Authorization
         /// <summary>
         /// 租户管理
         /// </summary>
-        public const string Pages_Tenants = "Pages.Tenants";
+        public const string Pages_Tenants = "Pages_Tenants";
         /// <summary>
         /// 用户管理
         /// </summary>
-        public const string Pages_Users = "Pages.Users";
+        public const string Pages_Users = "Pages_Users";
         /// <summary>
         /// 角色管理
         /// </summary>
-        public const string Pages_Roles = "Pages.Roles";
+        public const string Pages_Roles = "Pages_Roles";
         /// <summary>
         /// 基础信息修改
         /// </summary>
-        public const string Pages_BasicInfo = "Pages.BasicInfo";
+        public const string Pages_BasicInfo = "Pages_BasicInfo";
     }
 }

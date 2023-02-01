@@ -33,7 +33,11 @@ router.beforeEach(async(to, from, next) => {
         try {
           // get user info
           const user = await store.dispatch('user/getInfo')
-          const accessRoutes = await store.dispatch('permission/generateRoutes', user.permissions)
+          const permissions = []
+          user.permissions.forEach(item => {
+            permissions.push(item.item1)
+          })
+          const accessRoutes = await store.dispatch('permission/generateRoutes', permissions)
           // // dynamically add accessible routes
           router.addRoutes(accessRoutes)
           next({ ...to, replace: true }) // 保证路由已挂载

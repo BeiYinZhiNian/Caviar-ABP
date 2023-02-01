@@ -4,10 +4,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Abp.Auditing;
 using Abp.Authorization.Roles;
 using Abp.Authorization.Users;
 using Abp.Domain.Repositories;
+using Abp.Localization;
 using Caviar.Sessions.Dto;
 
 namespace Caviar.Sessions
@@ -43,7 +45,11 @@ namespace Caviar.Sessions
             {
                 output.User = ObjectMapper.Map<UserLoginInfoDto>(await GetCurrentUserAsync());
                 var roleIds = _userRoleRepository.GetAllList(u => u.UserId == output.User.Id).Select(u => u.Id);
-                output.User.Permissions = _permissionRepository.GetAllList(u => roleIds.Contains(u.RoleId) && u.IsGranted).Select(u => u.Name).ToArray();
+                output.User.Permissions = _permissionRepository.GetAllList(u => roleIds.Contains(u.RoleId) && u.IsGranted).Select(u =>
+                {
+                    var displayName = u.Name.Split('_').Last();
+                    return (u.Name, L(displayName));
+                }).ToList();
             }
 
             return output;

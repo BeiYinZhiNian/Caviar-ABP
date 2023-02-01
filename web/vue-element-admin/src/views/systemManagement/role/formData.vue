@@ -10,7 +10,7 @@
       </el-row>
       <el-form-item label="权限">
         <el-checkbox-group v-model="formData.grantedPermissions">
-          <el-checkbox v-for="permission in permissionsOption" :key="permission.name" :label="permission.name">{{ permission.displayName }}</el-checkbox>
+          <el-checkbox v-for="permission in permissionsOption" :key="permission.item1" :label="permission.item1">{{ permission.item2 }}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="备注">
@@ -31,7 +31,7 @@
   </el-dialog>
 </template>
 <script>
-import { createData, updateData, getAllPermissions } from '@/api/role'
+import { createData, updateData } from '@/api/role'
 export default {
   props: {
     success: {
@@ -46,7 +46,7 @@ export default {
       isCreateOrUpdate: true,
       dialogVisible: false,
       formData: {},
-      permissionsOption: [],
+      permissionsOption: this.$store.getters.userInfo.permissions,
       rules: {
         name: [
           { required: true, message: '请输入角色名称', trigger: 'blur' }
@@ -56,9 +56,7 @@ export default {
   },
   methods: {
     setFormData(formData) {
-      getAllPermissions().then(response => {
-        this.permissionsOption = response.result.items
-      })
+      console.log(this.permissionsOption)
       this.dialogVisible = true
       if (formData) {
         this.isCreateOrUpdate = false

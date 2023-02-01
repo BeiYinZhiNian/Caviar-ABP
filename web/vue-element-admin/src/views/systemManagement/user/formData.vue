@@ -27,9 +27,19 @@
         </el-col>
       </el-row>
       <el-form-item label="角色">
-        <el-checkbox-group v-model="formData.roleNames">
-          <el-checkbox v-for="role in rolesOption" :key="role.id" :label="role.name" />
-        </el-checkbox-group>
+        <el-select
+          v-model="formData.roleNames"
+          multiple
+          collapse-tags
+          placeholder="请选择"
+        >
+          <el-option
+            v-for="item in rolesOption"
+            :key="item.id"
+            :label="item.name"
+            :value="item.name"
+          />
+        </el-select>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
