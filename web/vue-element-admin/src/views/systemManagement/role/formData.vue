@@ -40,13 +40,14 @@ export default {
     }
   },
   data() {
+    const permissions = this.$store.getters.userInfo.permissions
     return {
       title: '',
       loading: false,
       isCreateOrUpdate: true,
       dialogVisible: false,
       formData: {},
-      permissionsOption: this.$store.getters.userInfo.permissions,
+      permissionsOption: permissions,
       rules: {
         name: [
           { required: true, message: '请输入角色名称', trigger: 'blur' }
@@ -56,7 +57,6 @@ export default {
   },
   methods: {
     setFormData(formData) {
-      console.log(this.permissionsOption)
       this.dialogVisible = true
       if (formData) {
         this.isCreateOrUpdate = false
