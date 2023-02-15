@@ -87,13 +87,19 @@ export const asyncRoutes = [
         path: 'user',
         name: 'user',
         component: () => import('@/views/systemManagement/user/index'),
-        meta: { title: '用户管理', icon: 'user', roles: ['Pages_Users'] }
+        meta: { title: '用户管理', icon: 'el-icon-user', roles: ['Pages_Users'] }
       },
       {
         path: 'role',
         name: 'role',
         component: () => import('@/views/systemManagement/role/index'),
         meta: { title: '角色管理', icon: 'el-icon-s-custom', roles: ['Pages_Roles'] }
+      },
+      {
+        path: 'tenant',
+        name: 'tenant',
+        component: () => import('@/views/systemManagement/tenant/index'),
+        meta: { title: '租户管理', icon: 'el-icon-discount', roles: ['Pages_Tenants'] }
       }
     ]
   },
