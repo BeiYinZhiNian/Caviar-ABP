@@ -10,6 +10,7 @@ using Abp.Authorization.Roles;
 using Abp.Authorization.Users;
 using Abp.Domain.Repositories;
 using Abp.Localization;
+using Caviar.Authorization.Roles;
 using Caviar.Sessions.Dto;
 
 namespace Caviar.Sessions
@@ -18,10 +19,12 @@ namespace Caviar.Sessions
     {
         private readonly IRepository<RolePermissionSetting, long> _permissionRepository;
         private readonly IRepository<UserRole, long> _userRoleRepository;
-        public SessionAppService(IRepository<RolePermissionSetting, long> permissionRepository, IRepository<UserRole, long> userRoleRepository)
+        private readonly IRepository<Role> _roleRepository;
+        public SessionAppService(IRepository<RolePermissionSetting, long> permissionRepository, IRepository<UserRole, long> userRoleRepository, IRepository<Role> roleRepository)
         {
             _permissionRepository = permissionRepository;
             _userRoleRepository = userRoleRepository;
+            _roleRepository = roleRepository;
         }
         [DisableAuditing]
         public async Task<GetCurrentLoginInformationsOutput> GetCurrentLoginInformations()
@@ -45,6 +48,7 @@ namespace Caviar.Sessions
             {
                 output.User = ObjectMapper.Map<UserLoginInfoDto>(await GetCurrentUserAsync());
                 var roleIds = _userRoleRepository.GetAllList(u => u.UserId == output.User.Id).Select(u => u.Id);
+                output.User.Roles = _roleRepository.GetAllList(u => roleIds.Contains(u.Id)).Select(u => u.Name).ToList();
                 output.User.Permissions = _permissionRepository.GetAllList(u => roleIds.Contains(u.RoleId) && u.IsGranted).Select(u =>
                 {
                     var displayName = u.Name.Split('_').Last();

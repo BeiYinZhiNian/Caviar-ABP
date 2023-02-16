@@ -42,7 +42,6 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-
   {
     path: '/',
     component: Layout,
@@ -52,6 +51,17 @@ export const constantRoutes = [
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
       meta: { title: '首页', icon: 'dashboard', affix: true }
+    }]
+  },
+  {
+    path: '/personalData',
+    component: Layout,
+    hidden: true,
+    children: [{
+      path: 'index',
+      name: 'index',
+      component: () => import('@/views/systemManagement/user/personalData'),
+      meta: { title: '个人信息' }
     }]
   }
 ]

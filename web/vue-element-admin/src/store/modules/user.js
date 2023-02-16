@@ -31,14 +31,14 @@ const mutations = {
     }
     state.name = data.name
     state.userId = data.id
-    state.phoneNumber = data.phoneNumber
+    state.phoneNumber = data.userName
     state.permissions = data.permissions
+    state.emailAddress = data.emailAddress
+    state.roles = data.roles
+    state.creationTime = data.creationTime
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
-  },
-  SET_ROLES: (state, roles) => {
-    state.roles = roles
   },
   SET_TENANT: (state, tenant) => {
     state.tenant = tenant
@@ -68,7 +68,6 @@ const actions = {
         const { result } = response
 
         const { user, tenant } = result
-
         commit('SET_USER_INFO', user)
         commit('SET_TENANT', tenant)
         resolve(user)

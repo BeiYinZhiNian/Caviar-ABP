@@ -20,6 +20,11 @@
               首页
             </el-dropdown-item>
           </router-link>
+          <router-link to="/personalData/index">
+            <el-dropdown-item>
+              <span style="display:block;">个人资料</span>
+            </el-dropdown-item>
+          </router-link>
           <el-dropdown-item @click.native="$refs.changePasswordDto.setFormData">
             <span style="display:block;">修改密码</span>
           </el-dropdown-item>
