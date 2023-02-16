@@ -165,7 +165,7 @@ namespace Caviar.Users
             var userIds = input.RoleIds == null ? null : _userRolerepository.GetAllList(u => input.RoleIds.Contains(u.RoleId)).Select(u => u.UserId).ToList();
             return Repository.GetAllIncluding(x => x.Roles)
                 .WhereIf(!input.Name.IsNullOrWhiteSpace(), x => x.Name.Contains(input.Name))
-                .WhereIf(!input.PhoneNumber.IsNullOrWhiteSpace(), x => x.PhoneNumber.Contains(input.PhoneNumber))
+                .WhereIf(!input.PhoneNumber.IsNullOrWhiteSpace(), x => x.PhoneNumber.Contains(input.PhoneNumber) || x.EmailAddress.Contains(input.PhoneNumber))
                 .WhereIf(input.RoleIds != null, x => userIds.Contains(x.Id));
         }
 

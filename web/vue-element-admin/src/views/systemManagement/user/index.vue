@@ -4,8 +4,8 @@
       <el-form-item label="账号名称">
         <el-input v-model="selectData.name" maxlength="20" placeholder="请输入账号名称" show-word-limit />
       </el-form-item>
-      <el-form-item label="手机号">
-        <el-input v-model="selectData.phoneNumber" placeholder="请输入手机号" maxlength="11" show-word-limit />
+      <el-form-item label="联系方式">
+        <el-input v-model="selectData.phoneNumber" placeholder="请输入手机号/邮箱" maxlength="100" show-word-limit />
       </el-form-item>
       <el-form-item label="角色">
         <el-select
