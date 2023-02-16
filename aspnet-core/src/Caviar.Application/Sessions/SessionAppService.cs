@@ -47,8 +47,8 @@ namespace Caviar.Sessions
             if (AbpSession.UserId.HasValue)
             {
                 output.User = ObjectMapper.Map<UserLoginInfoDto>(await GetCurrentUserAsync());
-                var roleIds = _userRoleRepository.GetAllList(u => u.UserId == output.User.Id).Select(u => u.Id);
-                output.User.Roles = _roleRepository.GetAllList(u => roleIds.Contains(u.Id)).Select(u => u.Name).ToList();
+                var roleIds = _userRoleRepository.GetAllList(u => u.UserId == output.User.Id).Select(u => u.RoleId);
+                output.User.RoleNames = _roleRepository.GetAllList(u => roleIds.Contains(u.Id)).Select(u => u.Name).ToArray();
                 output.User.Permissions = _permissionRepository.GetAllList(u => roleIds.Contains(u.RoleId) && u.IsGranted).Select(u =>
                 {
                     var displayName = u.Name.Split('_').Last();

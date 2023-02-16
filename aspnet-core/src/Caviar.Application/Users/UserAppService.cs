@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
+using Abp.Auditing;
 using Abp.Authorization;
 using Abp.Authorization.Users;
 using Abp.Domain.Entities;
@@ -57,7 +58,23 @@ namespace Caviar.Users
             _logInManager = logInManager;
             _userRolerepository = userRolerepository;
         }
+        [DisableAuditing]
+        public async Task<UserDto> Modify(ModifyUserDataDto modifyUserDataDto)
+        {
+            if (modifyUserDataDto.Id != AbpSession.UserId) throw new UserFriendlyException("非法操作");
+            var user = await _userManager.GetUserByIdAsync(modifyUserDataDto.Id);
+            if (user.PhoneNumber == CaviarConsts.AdminPhoneNumber)
+            {
+                throw new UserFriendlyException("超级管理员账号禁止修改");
+            }
+            ObjectMapper.Map(modifyUserDataDto, user);
+            user.SetNormalizedNames();
 
+            CheckErrors(await _userManager.UpdateAsync(user));
+
+
+            return await GetAsync(modifyUserDataDto);
+        }
         public override async Task<UserDto> CreateAsync(CreateUserDto input)
         {
             CheckCreatePermission();

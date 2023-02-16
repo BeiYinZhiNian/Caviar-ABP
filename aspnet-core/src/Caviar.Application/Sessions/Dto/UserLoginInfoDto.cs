@@ -6,27 +6,13 @@ using System.Collections.Generic;
 using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
 using Caviar.Authorization.Users;
+using Caviar.Users.Dto;
 
 namespace Caviar.Sessions.Dto
 {
     [AutoMapFrom(typeof(User))]
-    public class UserLoginInfoDto : EntityDto<long>
+    public class UserLoginInfoDto : UserDto
     {
-        public string Name { get; set; }
-
-        public string Surname { get; set; }
-
-        public string UserName { get; set; }
-
-        public string EmailAddress { get; set; }
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public DateTime CreationTime { get; set; }
-        /// <summary>
-        /// 所有角色
-        /// </summary>
-        public List<string> Roles { get; set; }
         /// <summary>
         /// 所有权限
         /// </summary>

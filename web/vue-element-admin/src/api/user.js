@@ -55,7 +55,7 @@ export function login(data) {
   })
 }
 
-export function getInfo(token) {
+export function getInfo() {
   return request({
     url: '/services/app/session/getCurrentLoginInformations',
     method: 'get'
@@ -65,6 +65,14 @@ export function getInfo(token) {
 export function resetPassword(data) {
   return request({
     url: baseUri + '/resetPassword',
+    method: 'post',
+    data
+  })
+}
+
+export function modify(data) {
+  return request({
+    url: baseUri + '/modify',
     method: 'post',
     data
   })

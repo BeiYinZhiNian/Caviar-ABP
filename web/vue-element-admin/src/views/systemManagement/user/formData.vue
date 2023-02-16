@@ -26,21 +26,31 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="角色">
-        <el-select
-          v-model="formData.roleNames"
-          multiple
-          collapse-tags
-          placeholder="请选择"
-        >
-          <el-option
-            v-for="item in rolesOption"
-            :key="item.id"
-            :label="item.name"
-            :value="item.name"
-          />
-        </el-select>
-      </el-form-item>
+      <el-row>
+        <el-col :span="11">
+          <el-form-item label="邮箱地址" prop="emailAddress">
+            <el-input v-model="formData.emailAddress" placeholder="请输入邮箱地址" maxlength="100" show-word-limit />
+          </el-form-item>
+        </el-col>
+        <el-col :span="11">
+          <el-form-item label="角色">
+            <el-select
+              v-model="formData.roleNames"
+              multiple
+              collapse-tags
+              placeholder="请选择"
+            >
+              <el-option
+                v-for="item in rolesOption"
+                :key="item.id"
+                :label="item.name"
+                :value="item.name"
+              />
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button type="primary" :loading="loading" @click="submitForm">确定</el-button>

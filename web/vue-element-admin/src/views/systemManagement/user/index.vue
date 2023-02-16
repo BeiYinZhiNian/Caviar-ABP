@@ -40,12 +40,13 @@
       >
         <el-table-column label="序号" type="index" width="80" align="center" />
         <el-table-column :show-overflow-tooltip="true" prop="name" label="账号名称" />
-        <el-table-column :show-overflow-tooltip="true" prop="phoneNumber" label="手机号" />
         <el-table-column prop="isActive" label="是否启用">
           <template slot-scope="scope">
             <table-bool :flag="scope.row.isActive" />
           </template>
         </el-table-column>
+        <el-table-column :show-overflow-tooltip="true" prop="phoneNumber" label="手机号" />
+        <el-table-column :show-overflow-tooltip="true" prop="emailAddress" label="邮箱地址" />
         <el-table-column :show-overflow-tooltip="true" prop="creationTime" label="创建时间" />
         <el-table-column :show-overflow-tooltip="true" prop="roleNames" label="角色">
           <template slot-scope="scope">

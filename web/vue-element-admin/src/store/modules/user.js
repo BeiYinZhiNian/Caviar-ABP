@@ -7,12 +7,9 @@ const getDefaultState = () => {
     token: getToken(),
     tenantId: getTenantId(),
     name: '',
-    userId: 0,
+    id: 0,
     tenant: undefined,
-    phoneNumber: '',
-    roles: [],
-    permissions: [],
-    avatar: ''
+    permissions: []
   }
 }
 
@@ -29,13 +26,7 @@ const mutations = {
     if (data === null) {
       return
     }
-    state.name = data.name
-    state.userId = data.id
-    state.phoneNumber = data.userName
-    state.permissions = data.permissions
-    state.emailAddress = data.emailAddress
-    state.roles = data.roles
-    state.creationTime = data.creationTime
+    Object.assign(state, data)
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar

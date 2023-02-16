@@ -30,7 +30,6 @@ namespace Caviar.Tests.Sessions
             var currentUser = await GetCurrentUserAsync();
             output.User.ShouldNotBe(null);
             output.User.Name.ShouldBe(currentUser.Name);
-            output.User.Surname.ShouldBe(currentUser.Surname);
 
             output.Tenant.ShouldBe(null);
         }

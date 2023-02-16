@@ -61,7 +61,7 @@ export const constantRoutes = [
       path: 'index',
       name: 'index',
       component: () => import('@/views/systemManagement/user/personalData'),
-      meta: { title: '个人信息' }
+      meta: { title: '个人资料' }
     }]
   }
 ]
