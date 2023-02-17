@@ -36,6 +36,7 @@
         <el-table-column :show-overflow-tooltip="true" prop="userNameOrEmailAddress" label="登录账号" />
         <el-table-column :show-overflow-tooltip="true" prop="browserInfo" label="浏览器" />
         <el-table-column :show-overflow-tooltip="true" prop="clientName" label="客户端" />
+        <el-table-column :show-overflow-tooltip="true" prop="clientIpAddress" label="IP地址" />
         <el-table-column :show-overflow-tooltip="true" prop="result" label="登录结果">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.result == 1" type="success">登录成功</el-tag>
