@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Abp.Application.Services.Dto;
+using Abp.Authorization.Users;
+using Abp.AutoMapper;
 
-namespace Caviar.Dto
+namespace Caviar.Journals.Dto
 {
-    public class CaviarPagedResultRequestDto : PagedResultRequestDto
+    [AutoMapFrom(typeof(UserLoginAttempt))]
+    public class UserLoginAttemptDto : UserLoginAttempt
     {
-        public override int SkipCount { get => base.SkipCount * base.MaxResultCount; set => base.SkipCount = value - 1; }
+        public string ResultMsg { get; set; }
     }
 }
