@@ -116,13 +116,13 @@ export const asyncRoutes = [
         name: 'journal',
         component: () => import('@/views/systemManagement/journal/index'),
         redirect: 'noRedirect',
-        meta: { title: '日志管理', icon: 'el-icon-discount' },
+        meta: { title: '日志管理', icon: 'el-icon-edit-outline' },
         children: [
           {
             path: 'loginlog',
             name: 'loginlog',
             component: () => import('@/views/systemManagement/journal/loginLog'),
-            meta: { title: '登录日志', icon: 'el-icon-user', roles: ['Pages_Users'] }
+            meta: { title: '登录日志', icon: 'el-icon-document-remove', roles: ['Pages_Users'] }
           }
         ]
       }
