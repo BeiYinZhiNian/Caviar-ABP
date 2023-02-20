@@ -13,11 +13,17 @@ namespace Caviar.Journals.Dto
 {
     public class PagedLogResultRequestDto : CaviarPagedResultRequestDto
     {
+        /// <summary>
+        /// 关键字
+        /// </summary>
         public string Key { get; set; }
+        /// <summary>
+        /// 日志范围
+        /// </summary>
         public DateTime?[] Time { get; set; }
         /// <summary>
-        /// 登录结果
+        /// 日志结果
         /// </summary>
-        public bool? LoginResult { get; set; }
+        public bool? Result { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Abp.Application.Services.Dto;
+using Abp.Auditing;
 using Abp.Authorization.Users;
 using Abp.Collections.Extensions;
 using Abp.Domain.Entities;
@@ -14,6 +15,7 @@ using Abp.Domain.Repositories;
 using Abp.Linq;
 using Abp.Linq.Extensions;
 using Caviar.Authorization;
+using Caviar.Authorization.Users;
 using Caviar.Journals.Dto;
 
 namespace Caviar.Journals
@@ -21,11 +23,15 @@ namespace Caviar.Journals
     public class JournalAppService : CaviarAppServiceBase
     {
         private readonly IRepository<UserLoginAttempt, long> _repository;
+        private readonly IRepository<AuditLog, long> _auditLogRepository;
+        private readonly ICaviarRepository _caviarRepository;
         private readonly AbpLoginResultTypeHelper _abpLoginResultTypeHelper;
-        public JournalAppService(IRepository<UserLoginAttempt, long> repository, AbpLoginResultTypeHelper abpLoginResultTypeHelper)
+        public JournalAppService(IRepository<UserLoginAttempt, long> repository, AbpLoginResultTypeHelper abpLoginResultTypeHelper, IRepository<AuditLog, long> auditLogRepository, ICaviarRepository caviarRepository)
         {
             _repository = repository;
             _abpLoginResultTypeHelper = abpLoginResultTypeHelper;
+            _auditLogRepository = auditLogRepository;
+            _caviarRepository = caviarRepository;
         }
 
         public async Task<PagedResultDto<UserLoginAttemptDto>> GetAllUserLoginLog(PagedLogResultRequestDto input)
@@ -33,7 +39,7 @@ namespace Caviar.Journals
             var query = _repository.GetAllIncluding()
                 .WhereIf(!string.IsNullOrEmpty(input.Key), x => x.UserNameOrEmailAddress.Contains(input.Key))
                 .WhereIf(input.Time != null && input.Time.Length == 2, x => x.CreationTime >= input.Time[0] && x.CreationTime <= input.Time[1])
-                .WhereIf(input.LoginResult != null, x => input.LoginResult.Value ? x.Result == Abp.Authorization.AbpLoginResultType.Success : x.Result != Abp.Authorization.AbpLoginResultType.Success);
+                .WhereIf(input.Result != null, x => input.Result.Value ? x.Result == Abp.Authorization.AbpLoginResultType.Success : x.Result != Abp.Authorization.AbpLoginResultType.Success);
             int totalCount = await NullAsyncQueryableExecuter.Instance.CountAsync(query).ConfigureAwait(continueOnCapturedContext: false);
             query = query.OrderByDescending(r => r.CreationTime);
             query = query.PageBy(input);
@@ -49,6 +55,20 @@ namespace Caviar.Journals
                     item.ResultMsg = _abpLoginResultTypeHelper.CreateLocalizedMessageForFailedLoginAttempt(item.Result, item.UserNameOrEmailAddress, item.TenancyName);
                 }
             }
+            return result;
+        }
+
+        public async Task<PagedResultDto<AuditLogDto>> GetAllAuditLog(PagedLogResultRequestDto input)
+        {
+            var userId = _caviarRepository.Set<User, long>().GetAllIncluding().Where(u => u.PhoneNumber.Contains(input.Key)).Select(u => u.Id);
+            var query = _auditLogRepository.GetAllIncluding()
+                .WhereIf(!string.IsNullOrEmpty(input.Key), x => userId.Contains(x.UserId.Value))
+                .WhereIf(input.Time != null && input.Time.Length == 2, x => x.ExecutionTime >= input.Time[0] && x.ExecutionTime <= input.Time[1])
+                .WhereIf(input.Result != null, x => input.Result.Value ? x.Exception != null : x.Exception == null);
+            int totalCount = await NullAsyncQueryableExecuter.Instance.CountAsync(query).ConfigureAwait(continueOnCapturedContext: false);
+            query = query.OrderByDescending(r => r.ExecutionTime);
+            query = query.PageBy(input);
+            var result = new PagedResultDto<AuditLogDto>(totalCount, (await NullAsyncQueryableExecuter.Instance.ToListAsync(query).ConfigureAwait(continueOnCapturedContext: false)).Select(new Func<AuditLog, AuditLogDto>(u => ObjectMapper.Map<AuditLogDto>(u))).ToList());
             return result;
         }
     }
