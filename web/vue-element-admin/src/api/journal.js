@@ -15,3 +15,16 @@ export function getAllUserLoginLog(data) {
   })
 }
 
+export function getAllAuditLog(data) {
+  return request({
+    url: baseUri + '/getAllAuditLog',
+    method: 'get',
+    params: data,
+    paramsSerializer: params => {
+      return qs.stringify(params, {
+        indices: false
+      })
+    }
+  })
+}
+

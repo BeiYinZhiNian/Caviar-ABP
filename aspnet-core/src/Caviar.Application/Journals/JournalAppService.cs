@@ -60,15 +60,24 @@ namespace Caviar.Journals
 
         public async Task<PagedResultDto<AuditLogDto>> GetAllAuditLog(PagedLogResultRequestDto input)
         {
-            var userId = _caviarRepository.Set<User, long>().GetAllIncluding().Where(u => u.PhoneNumber.Contains(input.Key)).Select(u => u.Id);
+            var userId = string.IsNullOrEmpty(input.Key) ? null : _caviarRepository.Set<User, long>().GetAllIncluding().Where(u => u.PhoneNumber.Contains(input.Key) || u.Name.Contains(input.Key)).Select(u => u.Id);
             var query = _auditLogRepository.GetAllIncluding()
                 .WhereIf(!string.IsNullOrEmpty(input.Key), x => userId.Contains(x.UserId.Value))
                 .WhereIf(input.Time != null && input.Time.Length == 2, x => x.ExecutionTime >= input.Time[0] && x.ExecutionTime <= input.Time[1])
-                .WhereIf(input.Result != null, x => input.Result.Value ? x.Exception != null : x.Exception == null);
+                .WhereIf(input.Result != null, x => input.Result.Value ? x.Exception == null : !string.IsNullOrEmpty(x.Exception));
             int totalCount = await NullAsyncQueryableExecuter.Instance.CountAsync(query).ConfigureAwait(continueOnCapturedContext: false);
             query = query.OrderByDescending(r => r.ExecutionTime);
             query = query.PageBy(input);
             var result = new PagedResultDto<AuditLogDto>(totalCount, (await NullAsyncQueryableExecuter.Instance.ToListAsync(query).ConfigureAwait(continueOnCapturedContext: false)).Select(new Func<AuditLog, AuditLogDto>(u => ObjectMapper.Map<AuditLogDto>(u))).ToList());
+            foreach (var item in result.Items)
+            {
+                if (item.UserId != null)
+                {
+                    var user = _caviarRepository.Set<User, long>().FirstOrDefault(u => u.Id == item.UserId);
+                    item.PhoneNumber = user?.PhoneNumber;
+                    item.Name = user?.Name;
+                }
+            }
             return result;
         }
     }

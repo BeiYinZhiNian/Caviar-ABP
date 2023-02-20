@@ -22,8 +22,8 @@ namespace Caviar
         /// Gets release (last build) date of the application.
         /// It's shown in the web page.
         /// </summary>
-        public static DateTime ReleaseDate => LzyReleaseDate.Value;
+        public static DateTime ReleaseDate => _lzyReleaseDate.Value;
 
-        private static readonly Lazy<DateTime> LzyReleaseDate = new Lazy<DateTime>(() => new FileInfo(typeof(AppVersionHelper).GetAssembly().Location).LastWriteTime);
+        private static readonly Lazy<DateTime> _lzyReleaseDate = new Lazy<DateTime>(() => new FileInfo(typeof(AppVersionHelper).GetAssembly().Location).LastWriteTime);
     }
 }

@@ -119,6 +119,12 @@ export const asyncRoutes = [
         meta: { title: '日志管理', icon: 'el-icon-edit-outline' },
         children: [
           {
+            path: 'auditLog',
+            name: 'auditLog',
+            component: () => import('@/views/systemManagement/journal/auditLog'),
+            meta: { title: '审计日志', icon: 'el-icon-document', roles: ['Pages_Users'] }
+          },
+          {
             path: 'loginlog',
             name: 'loginlog',
             component: () => import('@/views/systemManagement/journal/loginLog'),

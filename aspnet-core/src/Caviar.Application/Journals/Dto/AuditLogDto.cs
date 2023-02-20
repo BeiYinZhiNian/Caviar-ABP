@@ -14,6 +14,7 @@ namespace Caviar.Journals.Dto
     [AutoMapFrom(typeof(AuditLog))]
     public class AuditLogDto : AuditLog
     {
-
+        public string PhoneNumber { get; set; }
+        public string Name { get; set; }
     }
 }

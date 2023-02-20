@@ -1,16 +1,16 @@
 <template>
   <div>
     <el-form ref="form" :model="selectData" inline>
-      <el-form-item label="登录账号">
-        <el-input v-model="selectData.key" maxlength="20" placeholder="请输入登录账号" show-word-limit />
+      <el-form-item label="操作人">
+        <el-input v-model="selectData.key" maxlength="20" placeholder="请输入操作人账号/名称" show-word-limit />
       </el-form-item>
-      <el-form-item label="登录结果">
+      <el-form-item label="操作结果">
         <el-select v-model="selectData.result" clearable placeholder="请选择">
-          <el-option label="登录成功" :value="true" />
-          <el-option label="登录失败" :value="false" />
+          <el-option label="成功" :value="true" />
+          <el-option label="失败" :value="false" />
         </el-select>
       </el-form-item>
-      <el-form-item label="登录时间">
+      <el-form-item label="操作时间">
         <el-date-picker
           v-model="selectData.time"
           type="datetimerange"
@@ -33,23 +33,29 @@
         style="width: 100%"
       >
         <el-table-column label="序号" type="index" width="80" align="center" />
-        <el-table-column :show-overflow-tooltip="true" prop="userNameOrEmailAddress" label="登录账号" />
+        <el-table-column :show-overflow-tooltip="true" prop="phoneNumber" label="操作账号" />
         <el-table-column :show-overflow-tooltip="true" prop="browserInfo" label="浏览器" />
-        <el-table-column :show-overflow-tooltip="true" prop="clientName" label="客户端">
-          <template slot-scope="scope">
-            <span v-if="!scope.row.clientName" type="success">浏览器</span>
-            <span v-if="scope.row.clientName" type="danger">{{ scope.row.clientName }}</span>
-          </template>
-        </el-table-column>
         <el-table-column :show-overflow-tooltip="true" prop="clientIpAddress" label="IP地址" />
-        <el-table-column :show-overflow-tooltip="true" prop="result" label="登录结果">
+        <el-table-column :show-overflow-tooltip="true" prop="result" label="操作结果">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.result == 1" type="success">登录成功</el-tag>
-            <el-tag v-if="scope.row.result != 1" type="danger">登录失败</el-tag>
+            <el-tag v-if="!scope.row.exception" type="success">成功</el-tag>
+            <el-tag v-if="scope.row.exception" type="danger">失败</el-tag>
           </template>
         </el-table-column>
-        <el-table-column :show-overflow-tooltip="true" prop="resultMsg" label="登录信息" />
-        <el-table-column :show-overflow-tooltip="true" prop="creationTime" label="登录时间" />
+        <el-table-column :show-overflow-tooltip="true" prop="serviceName" label="请求服务" />
+        <el-table-column :show-overflow-tooltip="true" prop="methodName" label="请求方法" />
+        <el-table-column :show-overflow-tooltip="true" prop="executionTime" label="请求时间" />
+        <el-table-column :show-overflow-tooltip="true" prop="executionDuration" label="运行时长" />
+        <el-table-column :show-overflow-tooltip="true" prop="clientIpAddress" label="IP地址" />
+        <el-table-column :show-overflow-tooltip="true" label="操作" width="150">
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              type="primary"
+              @click="$refs.auditDetails.setFormData(scope.row)"
+            >详情</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
     <div>
@@ -63,11 +69,14 @@
         @current-change="handleCurrentChange"
       />
     </div>
+    <auditDetails ref="auditDetails" />
   </div>
 </template>
 <script>
-import { getAllUserLoginLog } from '@/api/journal'
+import { getAllAuditLog } from '@/api/journal'
+import auditDetails from '@/views/systemManagement/journal/auditDetails.vue'
 export default {
+  components: { auditDetails },
   data() {
     return {
       loading: false,
@@ -88,7 +97,7 @@ export default {
       if (!selectData) {
         selectData = this.selectData
       }
-      getAllUserLoginLog(selectData).then(response => {
+      getAllAuditLog(selectData).then(response => {
         this.tableData = response.result
       }).finally(() => {
         this.loading = false
