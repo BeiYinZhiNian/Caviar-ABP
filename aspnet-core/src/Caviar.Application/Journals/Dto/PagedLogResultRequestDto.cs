@@ -14,7 +14,7 @@ namespace Caviar.Journals.Dto
     public class PagedLogResultRequestDto : CaviarPagedResultRequestDto
     {
         public string Key { get; set; }
-        public DateTime[] Time { get; set; }
+        public DateTime?[] Time { get; set; }
         /// <summary>
         /// 登录结果
         /// </summary>
