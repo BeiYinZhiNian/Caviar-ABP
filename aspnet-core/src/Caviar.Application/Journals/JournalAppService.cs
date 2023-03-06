@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Abp.Application.Services.Dto;
 using Abp.Auditing;
+using Abp.Authorization;
 using Abp.Authorization.Users;
 using Abp.Collections.Extensions;
 using Abp.Domain.Entities;
@@ -20,6 +21,7 @@ using Caviar.Journals.Dto;
 
 namespace Caviar.Journals
 {
+    [AbpAuthorize(PermissionNames.SystemSettings_Journals)]
     public class JournalAppService : CaviarAppServiceBase
     {
         private readonly IRepository<UserLoginAttempt, long> _repository;
@@ -33,7 +35,7 @@ namespace Caviar.Journals
             _auditLogRepository = auditLogRepository;
             _caviarRepository = caviarRepository;
         }
-
+        [AbpAuthorize(PermissionNames.SystemSettings_Journals_Login)]
         public async Task<PagedResultDto<UserLoginAttemptDto>> GetAllUserLoginLog(PagedLogResultRequestDto input)
         {
             var query = _repository.GetAllIncluding()
@@ -57,7 +59,7 @@ namespace Caviar.Journals
             }
             return result;
         }
-
+        [AbpAuthorize(PermissionNames.SystemSettings_Journals_AuditLog)]
         public async Task<PagedResultDto<AuditLogDto>> GetAllAuditLog(PagedLogResultRequestDto input)
         {
             var userId = string.IsNullOrEmpty(input.Key) ? null : _caviarRepository.Set<User, long>().GetAllIncluding().Where(u => u.PhoneNumber.Contains(input.Key) || u.Name.Contains(input.Key)).Select(u => u.Id);

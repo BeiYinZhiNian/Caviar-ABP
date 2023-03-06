@@ -117,19 +117,19 @@ export const asyncRoutes = [
         component: () => import('@/views/systemManagement/journal/index'),
         redirect: 'noRedirect',
         alwaysShow: true,
-        meta: { title: '日志管理', icon: 'el-icon-edit-outline' },
+        meta: { title: '日志管理', icon: 'el-icon-edit-outline', roles: ['SystemSettings_Journals'] },
         children: [
           {
             path: 'auditLog',
             name: 'auditLog',
             component: () => import('@/views/systemManagement/journal/auditLog'),
-            meta: { title: '审计日志', icon: 'el-icon-document', roles: ['SystemSettings_Users'] }
+            meta: { title: '审计日志', icon: 'el-icon-document', roles: ['SystemSettings_Journals_AuditLog'] }
           },
           {
             path: 'loginlog',
             name: 'loginlog',
             component: () => import('@/views/systemManagement/journal/loginLog'),
-            meta: { title: '登录日志', icon: 'el-icon-document-remove', roles: ['SystemSettings_Users'] }
+            meta: { title: '登录日志', icon: 'el-icon-document-remove', roles: ['SystemSettings_Journals_Login'] }
           }
         ]
       }

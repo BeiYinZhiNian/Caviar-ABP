@@ -31,6 +31,12 @@ namespace Caviar.Authorization
         public const string SystemSettings_Roles_Edit = "SystemSettings_Roles_Edit";
         public const string SystemSettings_Roles_Delete = "SystemSettings_Roles_Delete";
         /// <summary>
+        /// 日志
+        /// </summary>
+        public const string SystemSettings_Journals = "SystemSettings_Journals";
+        public const string SystemSettings_Journals_Login = "SystemSettings_Journals_Login";
+        public const string SystemSettings_Journals_AuditLog = "SystemSettings_Journals_AuditLog";
+        /// <summary>
         /// 基础信息修改
         /// </summary>
         public const string BasicInfo = "BasicInfo";
