@@ -44,7 +44,7 @@ namespace Caviar.MultiTenancy
             _roleManager = roleManager;
             _abpZeroDbMigrator = abpZeroDbMigrator;
         }
-        [AbpAuthorize(PermissionNames.Pages_Tenants_Create)]
+        [AbpAuthorize(PermissionNames.SystemSettings_Tenants_Create)]
         public override async Task<TenantDto> CreateAsync(CreateTenantDto input)
         {
             CheckCreatePermission();
@@ -92,12 +92,12 @@ namespace Caviar.MultiTenancy
 
             return MapToEntityDto(tenant);
         }
-        [AbpAuthorize(PermissionNames.Pages_Tenants_Edit)]
+        [AbpAuthorize(PermissionNames.SystemSettings_Tenants_Edit)]
         public override Task<TenantDto> UpdateAsync(TenantDto input)
         {
             return base.UpdateAsync(input);
         }
-        [AbpAuthorize(PermissionNames.Pages_Tenants_Delete)]
+        [AbpAuthorize(PermissionNames.SystemSettings_Tenants_Delete)]
         public override async Task DeleteAsync(EntityDto<int> input)
         {
             CheckDeletePermission();
@@ -105,7 +105,7 @@ namespace Caviar.MultiTenancy
             var tenant = await _tenantManager.GetByIdAsync(input.Id);
             await _tenantManager.DeleteAsync(tenant);
         }
-        [AbpAuthorize(PermissionNames.Pages_Tenants)]
+        [AbpAuthorize(PermissionNames.SystemSettings_Tenants)]
         public override Task<PagedResultDto<TenantDto>> GetAllAsync(PagedTenantResultRequestDto input)
         {
             return base.GetAllAsync(input);

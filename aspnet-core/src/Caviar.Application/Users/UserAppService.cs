@@ -74,7 +74,7 @@ namespace Caviar.Users
 
             return await GetAsync(modifyUserDataDto);
         }
-        [AbpAuthorize(PermissionNames.Pages_Users_Create)]
+        [AbpAuthorize(PermissionNames.SystemSettings_Users_Create)]
         public override async Task<UserDto> CreateAsync(CreateUserDto input)
         {
             CheckCreatePermission();
@@ -97,7 +97,7 @@ namespace Caviar.Users
 
             return MapToEntityDto(user);
         }
-        [AbpAuthorize(PermissionNames.Pages_Users_Edit)]
+        [AbpAuthorize(PermissionNames.SystemSettings_Users_Edit)]
         public override async Task<UserDto> UpdateAsync(UserDto input)
         {
             CheckUpdatePermission();
@@ -118,7 +118,7 @@ namespace Caviar.Users
 
             return await GetAsync(input);
         }
-        [AbpAuthorize(PermissionNames.Pages_Users_Delete)]
+        [AbpAuthorize(PermissionNames.SystemSettings_Users_Delete)]
         public override async Task DeleteAsync(EntityDto<long> input)
         {
             var user = await _userManager.GetUserByIdAsync(input.Id);
@@ -128,7 +128,7 @@ namespace Caviar.Users
             }
             await _userManager.DeleteAsync(user);
         }
-        [AbpAuthorize(PermissionNames.Pages_Users)]
+        [AbpAuthorize(PermissionNames.SystemSettings_Users)]
         public override Task<PagedResultDto<UserDto>> GetAllAsync(PagedUserResultRequestDto input)
         {
             return base.GetAllAsync(input);

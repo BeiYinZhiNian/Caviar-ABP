@@ -91,44 +91,45 @@ export const asyncRoutes = [
     alwaysShow: true,
     redirect: 'noRedirect',
     name: 'systemManagement',
-    meta: { title: '系统设置', icon: 'el-icon-setting' },
+    meta: { title: '系统设置', icon: 'el-icon-setting', roles: ['SystemSettings'] },
     children: [
       {
         path: 'user',
         name: 'user',
         component: () => import('@/views/systemManagement/user/index'),
-        meta: { title: '用户管理', icon: 'el-icon-user', roles: ['Pages_Users'] }
+        meta: { title: '用户管理', icon: 'el-icon-user', roles: ['SystemSettings_Users'] }
       },
       {
         path: 'role',
         name: 'role',
         component: () => import('@/views/systemManagement/role/index'),
-        meta: { title: '角色管理', icon: 'el-icon-s-custom', roles: ['Pages_Roles'] }
+        meta: { title: '角色管理', icon: 'el-icon-s-custom', roles: ['SystemSettings_Roles'] }
       },
       {
         path: 'tenant',
         name: 'tenant',
         component: () => import('@/views/systemManagement/tenant/index'),
-        meta: { title: '租户管理', icon: 'el-icon-discount', roles: ['Pages_Tenants'] }
+        meta: { title: '租户管理', icon: 'el-icon-discount', roles: ['SystemSettings_Tenants'] }
       },
       {
         path: 'journal',
         name: 'journal',
         component: () => import('@/views/systemManagement/journal/index'),
         redirect: 'noRedirect',
+        alwaysShow: true,
         meta: { title: '日志管理', icon: 'el-icon-edit-outline' },
         children: [
           {
             path: 'auditLog',
             name: 'auditLog',
             component: () => import('@/views/systemManagement/journal/auditLog'),
-            meta: { title: '审计日志', icon: 'el-icon-document', roles: ['Pages_Users'] }
+            meta: { title: '审计日志', icon: 'el-icon-document', roles: ['SystemSettings_Users'] }
           },
           {
             path: 'loginlog',
             name: 'loginlog',
             component: () => import('@/views/systemManagement/journal/loginLog'),
-            meta: { title: '登录日志', icon: 'el-icon-document-remove', roles: ['Pages_Users'] }
+            meta: { title: '登录日志', icon: 'el-icon-document-remove', roles: ['SystemSettings_Users'] }
           }
         ]
       }

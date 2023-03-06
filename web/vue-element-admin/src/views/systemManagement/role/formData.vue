@@ -9,7 +9,7 @@
         </el-col>
       </el-row>
       <el-form-item label="权限">
-        <el-tree :data="permissionData" show-checkbox check-strictly node-key="nodeKey" :default-checked-keys="formData.grantedPermissions" />
+        <el-tree ref="tree" :data="permissionData" show-checkbox check-strictly node-key="nodeKey" :default-checked-keys="formData.grantedPermissions" />
       </el-form-item>
       <el-form-item label="备注">
         <el-input
@@ -41,8 +41,7 @@ export default {
     const permissions = this.$store.getters.userInfo.permissions
     const permissionData = []
     permissions.forEach(element => {
-      let node_keys = element.item1.split('_')
-      node_keys = node_keys.slice(1, node_keys.length)
+      const node_keys = element.item1.split('_')
       this.treefixed(permissionData, node_keys, element, 0)
     })
     console.log(permissionData)
@@ -109,6 +108,7 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.loading = true
+          this.formData.grantedPermissions = this.$refs.tree.getCheckedKeys()
           const action = this.isCreateOrUpdate ? createData : updateData
           action(this.formData).then(response => {
             this.$message({

@@ -99,7 +99,7 @@
     <text name="SearchWithThreeDot">搜索...</text>
 	<text name="UsersActivation">用户激活</text>
     <text name="BasicInfo">基础信息修改</text>
-    
+    <text name="SystemSettings">系统设置</text>
   </texts>
 </localizationDictionary>
 

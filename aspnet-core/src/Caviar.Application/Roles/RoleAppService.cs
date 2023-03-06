@@ -33,7 +33,7 @@ namespace Caviar.Roles
             _roleManager = roleManager;
             _userManager = userManager;
         }
-        [AbpAuthorize(PermissionNames.Pages_Roles_Create)]
+        [AbpAuthorize(PermissionNames.SystemSettings_Roles_Create)]
         public override async Task<RoleDto> CreateAsync(CreateRoleDto input)
         {
             CheckCreatePermission();
@@ -65,7 +65,7 @@ namespace Caviar.Roles
 
             return new ListResultDto<RoleListDto>(ObjectMapper.Map<List<RoleListDto>>(roles));
         }
-        [AbpAuthorize(PermissionNames.Pages_Roles_Edit)]
+        [AbpAuthorize(PermissionNames.SystemSettings_Roles_Edit)]
         public override async Task<RoleDto> UpdateAsync(RoleDto input)
         {
             CheckUpdatePermission();
@@ -88,7 +88,7 @@ namespace Caviar.Roles
 
             return MapToEntityDto(role);
         }
-        [AbpAuthorize(PermissionNames.Pages_Roles_Delete)]
+        [AbpAuthorize(PermissionNames.SystemSettings_Roles_Delete)]
         public override async Task DeleteAsync(EntityDto<int> input)
         {
             CheckDeletePermission();
@@ -107,12 +107,12 @@ namespace Caviar.Roles
 
             CheckErrors(await _roleManager.DeleteAsync(role));
         }
-        [AbpAuthorize(PermissionNames.Pages_Roles)]
+        [AbpAuthorize(PermissionNames.SystemSettings_Roles)]
         public override Task<PagedResultDto<RoleDto>> GetAllAsync(PagedRoleResultRequestDto input)
         {
             return base.GetAllAsync(input);
         }
-        [AbpAuthorize(PermissionNames.Pages_Roles)]
+        [AbpAuthorize(PermissionNames.SystemSettings_Roles)]
         public Task<ListResultDto<PermissionDto>> GetAllPermissions()
         {
             var permissions = PermissionManager.GetAllPermissions();

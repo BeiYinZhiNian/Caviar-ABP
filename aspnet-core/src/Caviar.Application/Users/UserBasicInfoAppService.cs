@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Caviar.Users
 {
-    [AbpAuthorize(PermissionNames.Pages_BasicInfo)]
+    [AbpAuthorize(PermissionNames.BasicInfo)]
     public class UserBasicInfoAppService : ApplicationService
     {
         private readonly UserManager _userManager;

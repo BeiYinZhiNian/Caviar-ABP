@@ -6,29 +6,33 @@ namespace Caviar.Authorization
     public static class PermissionNames
     {
         /// <summary>
+        /// 系统设置
+        /// </summary>
+        public const string SystemSettings = "SystemSettings";
+        /// <summary>
         /// 租户管理
         /// </summary>
-        public const string Pages_Tenants = "Pages_Tenants";
-        public const string Pages_Tenants_Create = "Pages_Tenants_Create";
-        public const string Pages_Tenants_Edit = "Pages_Tenants_Edit";
-        public const string Pages_Tenants_Delete = "Pages_Tenants_Delete";
+        public const string SystemSettings_Tenants = "SystemSettings_Tenants";
+        public const string SystemSettings_Tenants_Create = "SystemSettings_Tenants_Create";
+        public const string SystemSettings_Tenants_Edit = "SystemSettings_Tenants_Edit";
+        public const string SystemSettings_Tenants_Delete = "SystemSettings_Tenants_Delete";
         /// <summary>
         /// 用户管理
         /// </summary>
-        public const string Pages_Users = "Pages_Users";
-        public const string Pages_Users_Create = "Pages_Users_Create";
-        public const string Pages_Users_Edit = "Pages_Users_Edit";
-        public const string Pages_Users_Delete = "Pages_Users_Delete";
+        public const string SystemSettings_Users = "SystemSettings_Users";
+        public const string SystemSettings_Users_Create = "SystemSettings_Users_Create";
+        public const string SystemSettings_Users_Edit = "SystemSettings_Users_Edit";
+        public const string SystemSettings_Users_Delete = "SystemSettings_Users_Delete";
         /// <summary>
         /// 角色管理
         /// </summary>
-        public const string Pages_Roles = "Pages_Roles";
-        public const string Pages_Roles_Create = "Pages_Roles_Create";
-        public const string Pages_Roles_Edit = "Pages_Roles_Edit";
-        public const string Pages_Roles_Delete = "Pages_Roles_Delete";
+        public const string SystemSettings_Roles = "SystemSettings_Roles";
+        public const string SystemSettings_Roles_Create = "SystemSettings_Roles_Create";
+        public const string SystemSettings_Roles_Edit = "SystemSettings_Roles_Edit";
+        public const string SystemSettings_Roles_Delete = "SystemSettings_Roles_Delete";
         /// <summary>
         /// 基础信息修改
         /// </summary>
-        public const string Pages_BasicInfo = "Pages_BasicInfo";
+        public const string BasicInfo = "BasicInfo";
     }
 }

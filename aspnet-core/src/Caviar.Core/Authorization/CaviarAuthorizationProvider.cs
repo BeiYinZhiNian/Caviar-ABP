@@ -18,8 +18,7 @@ namespace Caviar.Authorization
             foreach (var fieldInfo in fis)
             {
                 var nameArr = fieldInfo.Name.Split('_');
-                if (nameArr.Length <= 1) throw new Exception("权限命名不符合规则，无法自动加入");
-                if (nameArr[1] == "Tenants")
+                if (fieldInfo.Name.Contains("Tenants"))
                 {
                     context.CreatePermission(fieldInfo.Name, L(nameArr[nameArr.Length - 1]), multiTenancySides: MultiTenancySides.Host);
                 }
