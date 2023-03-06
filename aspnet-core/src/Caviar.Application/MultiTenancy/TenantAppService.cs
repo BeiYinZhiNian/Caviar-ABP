@@ -21,7 +21,6 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Caviar.MultiTenancy
 {
-    [AbpAuthorize(PermissionNames.Pages_Tenants)]
     public class TenantAppService : AsyncCrudAppService<Tenant, TenantDto, int, PagedTenantResultRequestDto, CreateTenantDto, TenantDto>, ITenantAppService
     {
         private readonly TenantManager _tenantManager;
@@ -45,7 +44,7 @@ namespace Caviar.MultiTenancy
             _roleManager = roleManager;
             _abpZeroDbMigrator = abpZeroDbMigrator;
         }
-
+        [AbpAuthorize(PermissionNames.Pages_Tenants_Create)]
         public override async Task<TenantDto> CreateAsync(CreateTenantDto input)
         {
             CheckCreatePermission();
@@ -93,6 +92,24 @@ namespace Caviar.MultiTenancy
 
             return MapToEntityDto(tenant);
         }
+        [AbpAuthorize(PermissionNames.Pages_Tenants_Edit)]
+        public override Task<TenantDto> UpdateAsync(TenantDto input)
+        {
+            return base.UpdateAsync(input);
+        }
+        [AbpAuthorize(PermissionNames.Pages_Tenants_Delete)]
+        public override async Task DeleteAsync(EntityDto<int> input)
+        {
+            CheckDeletePermission();
+
+            var tenant = await _tenantManager.GetByIdAsync(input.Id);
+            await _tenantManager.DeleteAsync(tenant);
+        }
+        [AbpAuthorize(PermissionNames.Pages_Tenants)]
+        public override Task<PagedResultDto<TenantDto>> GetAllAsync(PagedTenantResultRequestDto input)
+        {
+            return base.GetAllAsync(input);
+        }
 
         protected override IQueryable<Tenant> CreateFilteredQuery(PagedTenantResultRequestDto input)
         {
@@ -107,14 +124,6 @@ namespace Caviar.MultiTenancy
             entity.Name = updateInput.Name;
             entity.TenancyName = updateInput.TenancyName;
             entity.IsActive = updateInput.IsActive;
-        }
-
-        public override async Task DeleteAsync(EntityDto<int> input)
-        {
-            CheckDeletePermission();
-
-            var tenant = await _tenantManager.GetByIdAsync(input.Id);
-            await _tenantManager.DeleteAsync(tenant);
         }
 
         private void CheckErrors(IdentityResult identityResult)

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="title" :visible.sync="dialogVisible">
+  <el-dialog :title="title" :visible.sync="dialogVisible" class="abow-dialog">
     <el-form ref="form" :model="formData" :rules="rules" label-width="90px">
       <el-row>
         <el-col :span="11">
@@ -9,9 +9,7 @@
         </el-col>
       </el-row>
       <el-form-item label="权限">
-        <el-checkbox-group v-model="formData.grantedPermissions">
-          <el-checkbox v-for="permission in permissionsOption" :key="permission.item1" :label="permission.item1">{{ permission.item2 }}</el-checkbox>
-        </el-checkbox-group>
+        <el-tree :data="permissionData" show-checkbox check-strictly node-key="nodeKey" :default-checked-keys="formData.grantedPermissions" />
       </el-form-item>
       <el-form-item label="备注">
         <el-input
@@ -41,12 +39,20 @@ export default {
   },
   data() {
     const permissions = this.$store.getters.userInfo.permissions
+    const permissionData = []
+    permissions.forEach(element => {
+      let node_keys = element.item1.split('_')
+      node_keys = node_keys.slice(1, node_keys.length)
+      this.treefixed(permissionData, node_keys, element, 0)
+    })
+    console.log(permissionData)
     return {
       title: '',
       loading: false,
       isCreateOrUpdate: true,
       dialogVisible: false,
       formData: {},
+      permissionData: permissionData,
       permissionsOption: permissions,
       rules: {
         name: [
@@ -56,6 +62,35 @@ export default {
     }
   },
   methods: {
+    treefixed(permissionData, arr, value, index) {
+      let exist = false
+      permissionData.forEach(item => {
+        if (item.key === arr[index]) {
+          exist = true
+          if (arr.length - 1 === index) {
+          // 位置找到
+            item.label = value.item2
+          } else {
+            this.treefixed(item.children, arr, value, index + 1)
+          }
+        }
+      })
+      if (!exist) {
+        const item = {
+          label: '',
+          key: arr[index],
+          nodeKey: value.item1,
+          children: []
+        }
+        permissionData.push(item)
+        if (arr.length - 1 === index) {
+        // 位置找到
+          item.label = value.item2
+        } else {
+          this.treefixed(item.children, arr, value, index + 1)
+        }
+      }
+    },
     setFormData(formData) {
       this.dialogVisible = true
       if (formData) {
