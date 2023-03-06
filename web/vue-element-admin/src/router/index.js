@@ -129,7 +129,7 @@ export const asyncRoutes = [
             path: 'loginlog',
             name: 'loginlog',
             component: () => import('@/views/systemManagement/journal/loginLog'),
-            meta: { title: '登录日志', icon: 'el-icon-document-remove', roles: ['SystemSettings_Journals_Login'] }
+            meta: { title: '登录日志', icon: 'el-icon-document-remove', roles: ['SystemSettings_Journals_LoginLog'] }
           }
         ]
       }
