@@ -44,7 +44,6 @@ export default {
       const node_keys = element.item1.split('_')
       this.treefixed(permissionData, node_keys, element, 0)
     })
-    console.log(permissionData)
     return {
       title: '',
       loading: false,

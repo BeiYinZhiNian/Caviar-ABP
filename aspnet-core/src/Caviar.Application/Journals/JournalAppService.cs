@@ -35,7 +35,7 @@ namespace Caviar.Journals
             _auditLogRepository = auditLogRepository;
             _caviarRepository = caviarRepository;
         }
-        [AbpAuthorize(PermissionNames.SystemSettings_Journals_Login)]
+        [AbpAuthorize(PermissionNames.SystemSettings_Journals_LoginLog)]
         public async Task<PagedResultDto<UserLoginAttemptDto>> GetAllUserLoginLog(PagedLogResultRequestDto input)
         {
             var query = _repository.GetAllIncluding()

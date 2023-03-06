@@ -100,6 +100,10 @@
 	<text name="UsersActivation">用户激活</text>
     <text name="BasicInfo">基础信息修改</text>
     <text name="SystemSettings">系统设置</text>
+    <text name="ResetPassword">重置密码</text>
+      <text name="Journals">日志管理</text>
+      <text name="LoginLog">登录日志</text>
+      <text name="AuditLog">审计日志</text>
   </texts>
 </localizationDictionary>
 

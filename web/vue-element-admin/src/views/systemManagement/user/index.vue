@@ -26,7 +26,7 @@
         <el-button type="success" @click="loadData()">查询</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="$refs.formData.setFormData()">创建</el-button>
+        <el-button v-permission="['SystemSettings_Users_Create']" type="primary" @click="$refs.formData.setFormData()">创建</el-button>
       </el-form-item>
     </el-form>
     <div>
@@ -53,20 +53,21 @@
             <span>{{ scope.row.roleNames.join('、') }}</span>
           </template>
         </el-table-column>
-        <el-table-column :show-overflow-tooltip="true" label="操作" width="200">
+        <el-table-column v-if="checkPermission(['SystemSettings_Users_ResetPassword','SystemSettings_Users_Delete','SystemSettings_Users_Edit'])" :show-overflow-tooltip="true" label="操作" width="200">
           <template slot-scope="scope">
             <el-button
+              v-permission="['SystemSettings_Users_Edit']"
               size="mini"
               type="primary"
               @click="$refs.formData.setFormData(scope.row)"
             >编辑</el-button>
-            <el-dropdown style="margin-left: 10px;">
+            <el-dropdown v-if="checkPermission(['SystemSettings_Users_ResetPassword','SystemSettings_Users_Delete'])" style="margin-left: 10px;">
               <el-button type="success" size="mini">
                 更多<i class="el-icon-arrow-down el-icon--right" />
               </el-button>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="$refs.resetPasswordDto.setFormData(scope.row)">重置密码</el-dropdown-item>
-                <el-dropdown-item @click.native="handleDelete(scope.row)">删除</el-dropdown-item>
+                <el-dropdown-item v-permission="['SystemSettings_Users_ResetPassword']" @click.native="$refs.resetPasswordDto.setFormData(scope.row)">重置密码</el-dropdown-item>
+                <el-dropdown-item v-permission="['SystemSettings_Users_Delete']" @click.native="handleDelete(scope.row)">删除</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </template>

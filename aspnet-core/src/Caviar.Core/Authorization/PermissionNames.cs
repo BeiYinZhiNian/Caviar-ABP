@@ -23,6 +23,7 @@ namespace Caviar.Authorization
         public const string SystemSettings_Users_Create = "SystemSettings_Users_Create";
         public const string SystemSettings_Users_Edit = "SystemSettings_Users_Edit";
         public const string SystemSettings_Users_Delete = "SystemSettings_Users_Delete";
+        public const string SystemSettings_Users_ResetPassword = "SystemSettings_Users_ResetPassword";
         /// <summary>
         /// 角色管理
         /// </summary>
@@ -34,7 +35,7 @@ namespace Caviar.Authorization
         /// 日志
         /// </summary>
         public const string SystemSettings_Journals = "SystemSettings_Journals";
-        public const string SystemSettings_Journals_Login = "SystemSettings_Journals_Login";
+        public const string SystemSettings_Journals_LoginLog = "SystemSettings_Journals_LoginLog";
         public const string SystemSettings_Journals_AuditLog = "SystemSettings_Journals_AuditLog";
         /// <summary>
         /// 基础信息修改

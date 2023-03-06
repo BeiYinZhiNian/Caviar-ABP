@@ -133,6 +133,41 @@ namespace Caviar.Users
         {
             return base.GetAllAsync(input);
         }
+        [AbpAuthorize(PermissionNames.SystemSettings_Users_ResetPassword)]
+        public async Task<bool> ResetPassword(ResetPasswordDto input)
+        {
+            if (_abpSession.UserId == null)
+            {
+                throw new UserFriendlyException("Please log in before attempting to reset password.");
+            }
+
+            var currentUser = await _userManager.GetUserByIdAsync(_abpSession.GetUserId());
+            var loginAsync = await _logInManager.LoginAsync(currentUser.UserName, input.AdminPassword, shouldLockout: false);
+            if (loginAsync.Result != AbpLoginResultType.Success)
+            {
+                throw new UserFriendlyException("您输入的管理员密码不正确，请重试");
+            }
+
+            if (currentUser.IsDeleted || !currentUser.IsActive)
+            {
+                return false;
+            }
+
+            var roles = await _userManager.GetRolesAsync(currentUser);
+            if (!roles.Contains(StaticRoleNames.Tenants.Admin))
+            {
+                throw new UserFriendlyException("Only administrators may reset passwords.");
+            }
+
+            var user = await _userManager.GetUserByIdAsync(input.UserId);
+            if (user != null)
+            {
+                user.Password = _passwordHasher.HashPassword(user, input.NewPassword);
+                await CurrentUnitOfWork.SaveChangesAsync();
+            }
+
+            return true;
+        }
 
         public async Task<ListResultDto<RoleDto>> GetRoles()
         {
@@ -194,41 +229,6 @@ namespace Caviar.Users
         protected virtual void CheckErrors(IdentityResult identityResult)
         {
             identityResult.CheckErrors(LocalizationManager);
-        }
-
-        public async Task<bool> ResetPassword(ResetPasswordDto input)
-        {
-            if (_abpSession.UserId == null)
-            {
-                throw new UserFriendlyException("Please log in before attempting to reset password.");
-            }
-
-            var currentUser = await _userManager.GetUserByIdAsync(_abpSession.GetUserId());
-            var loginAsync = await _logInManager.LoginAsync(currentUser.UserName, input.AdminPassword, shouldLockout: false);
-            if (loginAsync.Result != AbpLoginResultType.Success)
-            {
-                throw new UserFriendlyException("您输入的管理员密码不正确，请重试");
-            }
-
-            if (currentUser.IsDeleted || !currentUser.IsActive)
-            {
-                return false;
-            }
-
-            var roles = await _userManager.GetRolesAsync(currentUser);
-            if (!roles.Contains(StaticRoleNames.Tenants.Admin))
-            {
-                throw new UserFriendlyException("Only administrators may reset passwords.");
-            }
-
-            var user = await _userManager.GetUserByIdAsync(input.UserId);
-            if (user != null)
-            {
-                user.Password = _passwordHasher.HashPassword(user, input.NewPassword);
-                await CurrentUnitOfWork.SaveChangesAsync();
-            }
-
-            return true;
         }
     }
 }

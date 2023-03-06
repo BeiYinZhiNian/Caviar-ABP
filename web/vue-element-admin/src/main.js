@@ -12,6 +12,8 @@ import '@/styles/caviar.scss'
 import App from './App'
 import store from './store'
 import router from './router'
+import permission from '@/directive/permission/index.js' // 权限判断指令
+import checkPermission from '@/utils/permission.js' // 权限判断函数
 
 import '@/icons' // icon
 import '@/permission' // permission control
@@ -38,7 +40,9 @@ Vue.use(ElementUI)
 // vue导入
 Vue.use(components)
 Vue.config.productionTip = false
-
+// 权限验证指令
+Vue.use(permission)
+Vue.prototype.checkPermission = checkPermission
 new Vue({
   el: '#app',
   router,

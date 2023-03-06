@@ -7,7 +7,7 @@
       <el-form-item>
         <el-button type="success" @click="loadData()">查询</el-button>
       </el-form-item>
-      <el-form-item>
+      <el-form-item v-permission="['SystemSettings_Roles_Create']">
         <el-button type="primary" @click="$refs.formData.setFormData()">创建</el-button>
       </el-form-item>
     </el-form>
@@ -24,14 +24,16 @@
         <el-table-column :show-overflow-tooltip="true" prop="name" label="角色名称" />
         <el-table-column :show-overflow-tooltip="true" prop="creationTime" label="创建时间" />
         <el-table-column :show-overflow-tooltip="true" prop="description" label="备注" />
-        <el-table-column :show-overflow-tooltip="true" label="操作" width="150">
+        <el-table-column v-if="checkPermission(['SystemSettings_Roles_Edit','SystemSettings_Roles_Delete'])" :show-overflow-tooltip="true" label="操作" width="150">
           <template slot-scope="scope">
             <el-button
+              v-permission="['SystemSettings_Roles_Edit']"
               size="mini"
               type="primary"
               @click="$refs.formData.setFormData(scope.row)"
             >编辑</el-button>
             <el-button
+              v-permission="['SystemSettings_Roles_Delete']"
               size="mini"
               type="danger"
               @click="handleDelete(scope.row)"
@@ -57,6 +59,7 @@
 <script>
 import formData from '@/views/systemManagement/role/formData.vue'
 import { getAll, deleteData } from '@/api/role'
+
 export default {
   components: { formData },
   data() {
