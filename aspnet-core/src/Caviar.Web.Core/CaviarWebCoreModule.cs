@@ -49,6 +49,11 @@ namespace Caviar
                  .CreateControllersForAppServices(
                      typeof(CaviarApplicationModule).GetAssembly()
                  );
+            //获取客户端ip异常的处理
+            Configuration.ReplaceService(typeof(Abp.Auditing.IClientInfoProvider), () =>
+            {
+                IocManager.Register<Abp.Auditing.IClientInfoProvider, Extensions.WebClientInfoProviderFix>(Abp.Dependency.DependencyLifeStyle.Transient);
+            });
 
             ConfigureTokenAuth();
         }

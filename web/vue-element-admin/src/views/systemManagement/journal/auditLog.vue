@@ -46,7 +46,6 @@
         <el-table-column :show-overflow-tooltip="true" prop="methodName" label="请求方法" />
         <el-table-column :show-overflow-tooltip="true" prop="executionTime" label="请求时间" />
         <el-table-column :show-overflow-tooltip="true" prop="executionDuration" label="运行时长" />
-        <el-table-column :show-overflow-tooltip="true" prop="clientIpAddress" label="IP地址" />
         <el-table-column :show-overflow-tooltip="true" label="操作" width="150">
           <template slot-scope="scope">
             <el-button
