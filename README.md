@@ -16,18 +16,16 @@ Vue-Element-Admin文档地址：https://panjiachen.gitee.io/vue-element-admin-si
 
 http://caviar.jcwlw.top/
 
-- [x] qwq
-
 #### 功能
 
 |功能|是否支持
 |:------:|:------:
-|用户管理|- [x] 
-|角色管理| - [x] 
-|权限管理| - [x] 
-|多语言| - [x] 
-|多租户| - [x] 
-|日志| - [x] 
+|用户管理|√
+|角色管理| √
+|权限管理| √
+|多语言| √
+|多租户| √
+|日志| √
 
 ### 安装教程
 
