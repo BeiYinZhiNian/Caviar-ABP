@@ -10,17 +10,19 @@ Caviar这是一个基于 ABP.NET 和 Vue-Element-Admin 的后台管理系统，�
 
 ABP文档地址：https://aspnetboilerplate.com/Pages/Documents
 
-Vue-Element-Admin文档地址：https://panjiachen.github.io/vue-element-admin-site/zh/guide/#%E5%8A%9F%E8%83%BD
+Vue-Element-Admin文档地址：https://panjiachen.gitee.io/vue-element-admin-site/zh/guide/
 
 #### 体验地址
 
 http://caviar.jcwlw.top/
 
+- [x] qwq
+
 #### 功能
 
 |功能|是否支持
 |:------:|:------:
-|用户管理| - [x] 
+|用户管理|- [x] 
 |角色管理| - [x] 
 |权限管理| - [x] 
 |多语言| - [x] 
