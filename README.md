@@ -1,25 +1,40 @@
 # Caviar
 
 #### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+Caviar这是一个基于 ABP.NET 和 Vue-Element-Admin 的后台管理系统，包含了 ABP.NET 的所有功能，并且国产化了很多功能，如手机号登录、默认中文等。
 
 #### 软件架构
-软件架构说明
+本项目采用前后端分离的架构，前端使用 Vue-Element-Admin 作为 UI 框架，后端使用 ABP.NET 作为后端框架。
 
+#### 文档
 
-#### 安装教程
+ABP文档地址：https://aspnetboilerplate.com/Pages/Documents
 
-1.  xxxxx
-2.  xxxx
-3.  xxxx
+Vue-Element-Admin文档地址：https://panjiachen.github.io/vue-element-admin-site/zh/guide/#%E5%8A%9F%E8%83%BD
 
-#### 使用说明
+### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+#### 前置条件
++ Node.js v12+
++ .NET 6 SDK
++ Visual Studio 2022 或 Visual Studio Code
+````
+# 克隆项目
+git clone https://gitee.com/Cherryblossoms/abp-caviar
+
+# 前端
+cd abp-caviar/web/vue-element-admin
+# 安装依赖
+npm install
+# 启动调试
+npm run dev
+````
+#### 后端
+使用 Visual Studio 2022打开项目aspnet-core/Caviar.sln
+1.  修改Caviar.Web.Host中appsettings.json数据库连接字符串
+2.  在程序包管理器控制台中选择EntityFarmeworkCore项目，执行 Update-Database
+3.  设置Caviar.Web.Host为启动项，启动项目
+
 
 #### 参与贡献
 
@@ -28,12 +43,3 @@ Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN�
 3.  提交代码
 4.  新建 Pull Request
 
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
