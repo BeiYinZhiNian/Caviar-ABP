@@ -12,6 +12,10 @@ ABP文档地址：https://aspnetboilerplate.com/Pages/Documents
 
 Vue-Element-Admin文档地址：https://panjiachen.github.io/vue-element-admin-site/zh/guide/#%E5%8A%9F%E8%83%BD
 
+#### 体验地址
+
+http://caviar.jcwlw.top/
+
 ### 安装教程
 
 #### 前置条件
