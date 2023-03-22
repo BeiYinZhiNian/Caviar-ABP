@@ -38,20 +38,13 @@ export default {
     }
   },
   data() {
-    const permissions = this.$store.getters.userInfo.permissions
-    const permissionData = []
-    permissions.forEach(element => {
-      const node_keys = element.item1.split('_')
-      this.treefixed(permissionData, node_keys, element, 0)
-    })
     return {
       title: '',
       loading: false,
       isCreateOrUpdate: true,
       dialogVisible: false,
       formData: {},
-      permissionData: permissionData,
-      permissionsOption: permissions,
+      permissionData: [],
       rules: {
         name: [
           { required: true, message: '请输入角色名称', trigger: 'blur' }
@@ -68,6 +61,7 @@ export default {
           if (arr.length - 1 === index) {
           // 位置找到
             item.label = value.item2
+            item.label = value.item1
           } else {
             this.treefixed(item.children, arr, value, index + 1)
           }
@@ -77,13 +71,14 @@ export default {
         const item = {
           label: '',
           key: arr[index],
-          nodeKey: value.item1,
+          nodeKey: '',
           children: []
         }
         permissionData.push(item)
         if (arr.length - 1 === index) {
         // 位置找到
           item.label = value.item2
+          item.label = value.item1
         } else {
           this.treefixed(item.children, arr, value, index + 1)
         }
@@ -91,6 +86,13 @@ export default {
     },
     setFormData(formData) {
       this.dialogVisible = true
+      const permissions = this.$store.getters.userInfo.permissions
+      const permissionData = []
+      permissions.forEach(element => {
+        const node_keys = element.item1.split('_')
+        this.treefixed(permissionData, node_keys, element, 0)
+      })
+      this.permissionData = permissionData
       if (formData) {
         this.isCreateOrUpdate = false
         this.title = '修改角色'
