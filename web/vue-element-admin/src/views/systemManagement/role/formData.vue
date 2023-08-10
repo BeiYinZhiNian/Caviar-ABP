@@ -61,7 +61,6 @@ export default {
           if (arr.length - 1 === index) {
           // 位置找到
             item.label = value.item2
-            item.label = value.item1
           } else {
             this.treefixed(item.children, arr, value, index + 1)
           }
@@ -78,7 +77,6 @@ export default {
         if (arr.length - 1 === index) {
         // 位置找到
           item.label = value.item2
-          item.label = value.item1
         } else {
           this.treefixed(item.children, arr, value, index + 1)
         }
